@@ -60,6 +60,17 @@ background-color: #153662;
         .main-btn {
         background-color: #666564;
         }
+        #HistoryDisplay{
+            margin-top: 20px;
+            font-size: 1rem;
+            padding: 10px;
+            font-weight: bold;
+
+        }
+        h5{
+            font-weight: bold;
+            color: #fff;
+        }
 </style>
 <body>
 <div class="calculator">
@@ -97,10 +108,13 @@ background-color: #153662;
 <!--Result-->
 
 <div class="calculator">
-        <h1>calculator
+        <h5>Calculator History</h5>
+        <div id="HistoryDisplay"></div>
+        
     </div>
     
 <script>
+    let History = [];
     function ClearDisplay(){
         document.getElementById('display').value='';
     }
@@ -115,15 +129,28 @@ background-color: #153662;
     function calculate(){
         const display= document.getElementById('display');
         try{
-            display.value=eval(display.value) || '';
+            const results = eval(display.value) || '';
+            if(display.value){
+                 History.unshift (`${display.value} = ${results}`);
+                 updateHistoryDisplay()
+                 }
+                 display.value = results;
 
-        }
+            }
+
 catch {
         display.value='Error';
     }
+    }
+
+function updateHistoryDisplay() {
+    const HistoryDisplay = document.getElementById('HistoryDisplay');
+    HistoryDisplay.innerHTML = History.join('<br>');
 }
+
+
 function appendsing(){ 
-const display=document.getElementById('display');
+const display= document.getElementById('display');
 let currentvalue=display.value;
 
 if (currentvalue.startsWith('-')){
